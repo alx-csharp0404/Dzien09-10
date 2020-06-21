@@ -49,5 +49,13 @@ namespace MyDoctor
                     return "---";
             }
         }
+
+        protected void gridView_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName=="DeleteRow")
+            {
+                //usuwać rekord
+            }
+        }
     }
 }

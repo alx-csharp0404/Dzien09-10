@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="VisitList.aspx.cs" Inherits="MyDoctor.VisitList" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 <h3>Lista wizyt</h3>
-    <asp:GridView ID="gridView" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" CellPadding="10" CellSpacing="5" DataKeyNames="id" DataSourceID="sqlDataSource" Font-Size="Medium" ForeColor="#333333" OnRowDataBound="gridView_RowDataBound" Width="100%">
+    <asp:GridView ID="gridView" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" CellPadding="10" CellSpacing="5" DataKeyNames="id" DataSourceID="sqlDataSource" Font-Size="Medium" ForeColor="#333333" OnRowDataBound="gridView_RowDataBound" Width="100%" OnRowCommand="gridView_RowCommand">
         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
         <Columns>
             <asp:BoundField DataField="id" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="id">
@@ -26,6 +26,24 @@
             <asp:BoundField DataField="visit_date" HeaderText="Data" SortExpression="visit_date" />
             <asp:BoundField DataField="status" HeaderText="Status" SortExpression="status" />
             <asp:BoundField DataField="descr" HeaderText="Opis" SortExpression="descr" />
+            
+            <asp:ImageField HeaderText="Obraz" NullDisplayText="BRAK" ControlStyle-Width="150px"
+               DataImageUrlField="image" DataImageUrlFormatString="~/uploads/{0}" >
+<ControlStyle Width="150px"></ControlStyle>
+            </asp:ImageField>
+
+            <asp:HyperLinkField DataNavigateUrlFields="id" DataNavigateUrlFormatString="EditVisit.aspx?id={0}" Text="Edytuj" />
+            
+            <asp:TemplateField ShowHeader="False">
+                <ItemTemplate>
+                    <asp:Button ID="Button1" runat="server" 
+                        CommandArgument='<%# Eval("id")  %>'
+                        Text="Usuń" CommandName="DeleteRow" 
+                        OnClientClick="return confirm('Czy na pewno usunąć rekord?');"
+                        />
+                </ItemTemplate>
+            </asp:TemplateField>
+
         </Columns>
         <EditRowStyle BackColor="#999999" />
         <FooterStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
